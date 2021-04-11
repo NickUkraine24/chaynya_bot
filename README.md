@@ -6,14 +6,18 @@ Telegram bot for seeing information about web page and items.
 ### For developers:
 1. Clone repository:
     ```shell
-    $ git clone
+    $ git clone https://github.com/NickUkraine24/chaynya_bot.git
     ```
 2. Get `.env` file (**location** of this file is the near of `bot.rb` file).
 3. Go to project directory:
    ```sh
    $ cd chaynya_bot 
    ```
-4. Run command:
+4. Run a command (for installing **required gems**):
+   ```sh
+   $ bundle install
+   ```
+5. Run a command (for **starting the bot**):
     ```sh
     $ ruby bot.rb
     ```
