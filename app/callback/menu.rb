@@ -2,6 +2,7 @@
 
 require 'faraday'
 require 'loofah'
+require 'open-uri'
 require_relative '../../lib/items'
 
 module Callback
@@ -41,7 +42,17 @@ module Callback
     def get_photo(order)
       bot.logger.info('[Callback::Menu.get_photo] - success')
 
-      path = ENV['PATH_FOR_IMAGES'] + order['image_url']
+      if order['image_url'].include? 'http'
+        bot.logger.info('[Callback::Menu.get_photo] - include http')
+
+        download = URI.parse(order['image_url']).open
+        path = ENV['PATH_FOR_IMAGES'] + download.base_uri.to_s.split('/')[-1]
+
+        IO.copy_stream(download, path) unless File.exist?(path)
+      else
+        path = ENV['PATH_FOR_IMAGES'] + order['image_url']
+      end
+
       Faraday::UploadIO.new(
         path,
         'image/jpeg'
